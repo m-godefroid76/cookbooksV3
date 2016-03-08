@@ -1,0 +1,62 @@
+<?php
+if( php_sapi_name() !== 'cli' ) {
+ die("Meant to be run from command line.\n");
+}
+
+// Modify this based on site domain
+$_SERVER['HTTP_HOST'] = '<%= node['DOMAIN_NAME'] %>';
+require_once( dirname( __FILE__ ) . '/wp-load.php' );
+
+define( 'WP_USE_THEMES', false );
+global $wp, $wp_query, $wp_the_query, $wp_rewrite;
+
+if ( ! function_exists( 'wp' ) )
+ die( 'Couldn\'t load WordPress :(' );
+if ( ! is_multisite() )
+ die( 'Multisite is not enabled.' );
+
+
+global $wpdb;
+$sql = $wpdb->prepare("SELECT domain, path FROM $wpdb->blogs WHERE archived='0' AND deleted ='0'", '');
+$blogs = $wpdb->get_results($sql);
+
+$i = 1;
+
+foreach($blogs as $blog) {
+
+  $url = 'http://' . $blog->domain . ($blog->path ? $blog->path : '/') . 'wp-cron.php';
+
+  $useragent = "Opera/9.80 (X11; Linux x86_64; U; en) Presto/2.10.229 Version/11.60";
+  
+  if ( $ch = curl_init( $url ) )
+  {
+      curl_setopt( $ch , CURLOPT_HEADER , 0 );
+      curl_setopt( $ch , CURLOPT_RETURNTRANSFER , true );
+      curl_setopt( $ch , CURLOPT_USERAGENT , $useragent );
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 10); //timeout in seconds
+  
+      $cron = curl_exec( $ch );
+      
+      if( curl_errno( $ch ) != 0 )
+      {
+          $message = 'Scrap Script - cURL exec error: ' . $ch;
+  
+          error_log( $message );
+      }
+      curl_close( $ch );
+      
+      
+      $i ++;
+      // if($i > 3){
+        // die('done2');
+      // }
+  }
+  else
+  {
+      $message = 'Scrap Script - cURL init with url: ' . $url . ' failed';
+  
+      error_log( $message );
+  } 
+}
+?>

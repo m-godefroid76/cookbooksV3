@@ -1,0 +1,26 @@
+# Apache2 logrotate snipet for Gentoo Linux
+# Contributes by Chuck Short
+#
+/var/log/apache2/*log {
+  missingok
+  notifempty
+  sharedscripts
+  postrotate
+  /etc/init.d/apache2 reload > /dev/null 2>&1 || true
+
+  BUCKET=<%= node['bucket'] %>
+  SITE=<%= node['SITE_NAME'] %>
+  date=$(date +"%Y")
+  # INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+  /usr/bin/s3cmd -m text/plain sync /var/log/apache2/wordpress-access.log-* s3://${BUCKET}/logs/access_log/${SITE}/$date/
+  /usr/bin/s3cmd -m text/plain sync /var/log/apache2/wordpress-error.log-* s3://${BUCKET}/logs/error_log/${SITE}/$date/
+  /usr/bin/s3cmd -m text/plain sync /var/log/apache2/wordpress-ganglia.log-* s3://${BUCKET}/logs/error_log/${SITE}/$date/
+  /usr/bin/s3cmd -m text/plain sync /var/log/apache2/error.log-* s3://${BUCKET}/logs/error_log/${SITE}/$date/
+  /usr/bin/s3cmd -m text/plain sync /var/log/apache2/access.log-* s3://${BUCKET}/logs/error_log/${SITE}/$date/
+  
+  # /usr/bin/s3cmd -m text/plain sync /var/log/apache2/ssl_access_log-* s3://${BUCKET}/apache/ssl_access_log/site=${SITE}/instance=${INSTANCE_ID}/
+  # /usr/bin/s3cmd -m text/plain sync /var/log/apache2/ssl_error_log-* s3://${BUCKET}/apache/ssl_error_log/site=${SITE}/instance=${INSTANCE_ID}/
+  # /usr/bin/s3cmd -m text/plain sync /var/log/apache2/ssl_request_log-* s3://${BUCKET}/apache/ssl_request_log/site=${SITE}/instance=${INSTANCE_ID}/
+
+  endscript
+}
