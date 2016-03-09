@@ -5,7 +5,7 @@
 #
 
 link '/mnt/srv/www/wordpress/current/wp-content/uploads' do
-  to '/mnt/uploads/wp-content/uploads'
+  to '/mnt/uploads'
 end
 
 template '/srv/www/wordpress/current/.htaccess' do
