@@ -16,8 +16,7 @@
  *
  * @package WordPress
  */
-define('WP_CACHE', true);
-define( 'WPCACHEHOME', '/srv/www/wordpress/current/wp-content/plugins/wp-super-cache/' ); //Added by WP-Cache Manager
+
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
 define('DB_NAME', '<%= node['DB_NAME'] %>');
@@ -68,7 +67,7 @@ define('NONCE_SALT',       '@O2+&Sb<UbW@RsN$_A%dZ]i8`_ ;_K+06w;}8@S6|%OrKu-V}Xw#
  * si vous leur donnez chacune un préfixe unique.
  * N'utilisez que des chiffres, des lettres non-accentuées, et des caractères soulignés!
  */
-$table_prefix  = 'rf_';
+$table_prefix  = 'wf_';
 
 /**
  * Pour les développeurs : le mode déboguage de WordPress.
