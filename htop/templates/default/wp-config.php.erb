@@ -19,6 +19,8 @@
 /** Enable W3 Total Cache */
 define('WP_CACHE', true); // Added by W3 Total Cache
 
+define('sunrise', 'on');
+
 // ** Réglages MySQL - Votre hébergeur doit vous fournir ces informations. ** //
 /** Nom de la base de données de WordPress. */
 define('DB_NAME', '<%= node['DB_NAME'] %>');
@@ -40,7 +42,7 @@ define('DB_CHARSET', 'utf8mb4');
   */
 define('DB_COLLATE', '');
 define('DISABLE_WP_CRON', 'true');
-define('sunrise', 'on');
+
 /**#@+
  * Clefs uniques d'authentification et salage.
  *
