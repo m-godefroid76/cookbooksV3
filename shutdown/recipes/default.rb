@@ -10,14 +10,14 @@ bash "logrotate on shutdown" do
   action :nothing
 end
 
-directory '/srv/www/wordpress/current/uploads' do
-  recursive false
-  action :delete
-end
+# directory '/srv/www/wordpress/current/uploads' do
+  # recursive false
+  # action :delete
+# end
 
 bash "unmount s3fs" do
   user 'root'
-  command 'sudo umount /srv/www/wordpress/current/wp-content/uploads/'
+  command 'sudo umount /mnt//uploads/'
   action :nothing
 end
 
