@@ -59,6 +59,14 @@ directory "/mnt/uploads" do
   recursive true
 end
 
+directory "/root/.config" do
+  mode "0755"
+  owner "root"
+  group "root"
+  action :create  
+  recursive true
+end
+
 directory "/root/.config/riofs" do
   mode "0755"
   owner "root"
