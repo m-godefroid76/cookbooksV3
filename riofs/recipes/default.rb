@@ -1,4 +1,4 @@
-%w{ build-essential glib-2.0 libevent-dev pkg-config libcurl4-openssl-dev libfuse-dev libfuse2 libxml2-dev mime-support }.each do |pkg|
+%w{ build-essential libglib2.0-dev libevent-dev pkg-config libcurl4-openssl-dev libfuse-dev libfuse2 libxml2-dev mime-support }.each do |pkg|
   package pkg
 end
 
