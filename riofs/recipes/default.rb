@@ -88,5 +88,5 @@ end
 
 execute 'mount uploads folder' do
   user "root"
-  command "riofs -c ~/.config/riofs/riofs.conf.xml -o allow_other #{ node[:bucket] } /mnt/uploads"
+  command "riofs --uid=33 --gid=33 -c ~/.config/riofs/riofs.conf.xml -o allow_other #{ node[:bucket] } /mnt/uploads"
 end
