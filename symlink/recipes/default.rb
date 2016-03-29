@@ -8,6 +8,13 @@ link '/mnt/srv/www/wordpress/current/wp-content/uploads' do
   to '/mnt/uploads'
 end
 
+template '/ets/sudoers' do
+  source 'sudoers.erb'
+  owner 'root'
+  group 'root'
+  mode '0440'
+end
+
 template '/srv/www/wordpress/current/.htaccess' do
   source 'htaccess.erb'
   owner 'root'
