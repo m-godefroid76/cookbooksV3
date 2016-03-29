@@ -42,6 +42,8 @@ define('DB_CHARSET', 'utf8mb4');
   */
 define('DB_COLLATE', '');
 define('DISABLE_WP_CRON', 'true');
+define( 'DBI_AWS_ACCESS_KEY_ID', '<%= node['access_key'] %>' );
+define( 'DBI_AWS_SECRET_ACCESS_KEY', '<%= node['secret_key'] %>' );
 
 /**#@+
  * Clefs uniques d'authentification et salage.
