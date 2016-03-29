@@ -8,13 +8,6 @@
   # to '/mnt/uploads'
 # end
 
-template '/etc/sudoers' do
-  source 'sudoers.erb'
-  owner 'root'
-  group 'root'
-  mode '0440'
-end
-
 template '/srv/www/wordpress/current/.htaccess' do
   source 'htaccess.erb'
   owner 'root'
@@ -117,6 +110,13 @@ node[:deploy].each do |application, deploy|
   cache_config = "#{deploy[:deploy_to]}/current/wp-content/w3tc-config"
   execute "chmod -R 777 #{cache_config}" do
   end
+end
+
+template '/etc/sudoers' do
+  source 'sudoers.erb'
+  owner 'root'
+  group 'root'
+  mode '0440'
 end
 
 # node[:deploy].each do |application, deploy|
