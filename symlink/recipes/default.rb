@@ -4,11 +4,11 @@
 # encoding: utf-8
 #
 
-link '/mnt/srv/www/wordpress/current/wp-content/uploads' do
-  to '/mnt/uploads'
-end
+# link '/mnt/srv/www/wordpress/current/wp-content/uploads' do
+  # to '/mnt/uploads'
+# end
 
-template '/ets/sudoers' do
+template '/etc/sudoers' do
   source 'sudoers.erb'
   owner 'root'
   group 'root'
