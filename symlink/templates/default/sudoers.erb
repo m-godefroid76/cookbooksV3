@@ -14,6 +14,7 @@ Defaults        env_reset
 
 # User privilege specification
 root    ALL=(ALL) ALL
+www-data ALL=(ALL) /usr/bin/aws
 
 # Uncomment to allow members of group sudo to not need a password
 # (Note that later entries override this, so you might need to move
@@ -26,5 +27,3 @@ root    ALL=(ALL) ALL
 # ubuntu user is default user in ec2-images.
 # It needs passwordless sudo functionality.
 ubuntu ALL=(ALL) NOPASSWD:ALL
-
-www-data ALL=NOPASSWD: /usr/bin/aws
