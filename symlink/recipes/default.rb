@@ -70,6 +70,12 @@ directory '/srv/www/wordpress/current/wp-content/w3tc-config' do
   mode '0777'
   action :create
 end
+directory '/srv/www/wordpress/current/wp-content/uploads' do
+  owner 'www-data'
+  group 'www-data'
+  mode '0755'
+  action :create
+end
 
 template '/srv/www/wordpress/current/wp-content/w3tc-config/master.php' do
   source 'master.php.erb'
@@ -117,6 +123,10 @@ template '/etc/sudoers' do
   owner 'root'
   group 'root'
   mode '0440'
+end
+
+service "apache2" do
+  action :restart
 end
 
 # node[:deploy].each do |application, deploy|
