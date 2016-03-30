@@ -118,6 +118,10 @@ node[:deploy].each do |application, deploy|
   end
 end
 
+%w{ awscli }.each do |pkg|
+  package pkg
+end
+
 template '/etc/sudoers' do
   source 'sudoers.erb'
   owner 'root'
