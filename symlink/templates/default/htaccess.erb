@@ -3,6 +3,10 @@ RewriteCond %{REQUEST_URI} !^/health-check$
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
 
+RewriteCond %{HTTP_HOST} ^(.*)<%= node['DOMAIN_NAME'] %>$ [NC]
+RewriteRule ^(.+\.(png|gif|jpe?g))$ http://<%= node['CDN_CNAME'] %>/$1 [L,R=301]
+
+
 # add a trailing slash to /wp-admin
 RewriteRule ^wp-admin$ wp-admin/ [R=301,L]
 
@@ -12,24 +16,6 @@ RewriteRule ^ - [L]
 RewriteRule ^(wp-(content|admin|includes).*) $1 [L]
 RewriteRule ^(.*\.php)$ $1 [L]
 RewriteRule . index.php [L]
-
-## EXPIRES CACHING ##
-<IfModule mod_expires.c>
-ExpiresActive On
-ExpiresByType image/jpg "access 1 year"
-ExpiresByType image/jpeg "access 1 year"
-ExpiresByType image/gif "access 1 year"
-ExpiresByType image/png "access 1 year"
-ExpiresByType text/css "access 1 month"
-ExpiresByType text/html "access 1 month"
-ExpiresByType application/pdf "access 1 month"
-ExpiresByType text/x-javascript "access 1 month"
-ExpiresByType application/x-shockwave-flash "access 1 month"
-ExpiresByType image/x-icon "access 1 year"
-ExpiresDefault "access 1 month"
-</IfModule>
-## EXPIRES CACHING ##
-
 
 # BEGIN W3TC Browser Cache
 <IfModule mod_mime.c>
@@ -154,6 +140,22 @@ ExpiresDefault "access 1 month"
     ExpiresByType application/vnd.ms-excel A31536000
     ExpiresByType application/zip A31536000
 </IfModule>
+<IfModule mod_deflate.c>
+    <IfModule mod_headers.c>
+        Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+        AddOutputFilterByType DEFLATE text/css text/x-component application/x-javascript application/javascript text/javascript text/x-js text/html text/richtext image/svg+xml text/plain text/xsd text/xsl text/xml image/x-icon application/json
+    <IfModule mod_mime.c>
+        # DEFLATE by extension
+        AddOutputFilter DEFLATE js css htm html xml
+    </IfModule>
+</IfModule>
+<FilesMatch "\.(css|htc|less|js|js2|js3|js4|CSS|HTC|LESS|JS|JS2|JS3|JS4)$">
+    <IfModule mod_headers.c>
+        Header set Pragma "public"
+        Header append Cache-Control "public"
+    </IfModule>
+</FilesMatch>
 <FilesMatch "\.(html|htm|rtf|rtx|svg|svgz|txt|xsd|xsl|xml|HTML|HTM|RTF|RTX|SVG|SVGZ|TXT|XSD|XSL|XML)$">
     <IfModule mod_headers.c>
         Header set Pragma "public"
@@ -167,7 +169,6 @@ ExpiresDefault "access 1 month"
     </IfModule>
 </FilesMatch>
 # END W3TC Browser Cache
-
 
 
 # BEGIN W3TC CDN
