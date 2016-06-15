@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+# Database credentials
+user="<%= node['DB_USER'] %>"
+password="<%= node['DB_PASSWORD'] %>"
+host="<%= node['DB_HOST'] %>"
+db_name="<%= node['DB_NAME'] %>"
+
+#mkdir if doesn't exist
+mkdir -p "/srv/www/wordpress/current/_backup/"
+mkdir -p "/srv/www/wordpress/current/_backup/database"
+
+# Other options
+backup_path="/srv/www/wordpress/current/_backup/database"
+date=$(date +"%d-%b-%Y")
+
+# Set default file permissions
+umask 177
+
+
+# Dump database into SQL file
+mysqldump --user=$user --password=$password --host=$host $db_name > $backup_path/$db_name-$date.sql
+
+#Zip file
+zip $backup_path/$db_name-$date.zip $backup_path/*.sql
+
+rm -I $backup_path/*.sql
+
+aws s3 cp $backup_path/$db_name-$date.zip s3:\/\/<%= node['bucket'] %>/backup_db/$db_name-$date.zip
+
+rm -I $backup_path/*.zip

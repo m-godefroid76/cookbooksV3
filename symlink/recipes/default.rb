@@ -64,6 +64,13 @@ template '/srv/www/wordpress/current/health-check.php' do
   mode '0644'
 end
 
+template '/scripts/backup-db.sh' do
+  source 'backup-db.sh.erb'
+  owner 'root'
+  group 'root'
+  mode '1777'
+end
+
 directory '/srv/www/wordpress/current/wp-content/w3tc-config' do
   owner 'www-data'
   group 'www-data'
@@ -105,6 +112,13 @@ bash "copy logrotate.cron from daily to hourly" do
   EOH
 end
 
+bash "download enfold.css from s3" do
+  user 'root'
+  code <<-EOH 
+  aws s3 cp s3:\/\/dev2-webfactory\/wp-content\/uploads\/ . --recursive  --exclude "*"  --include "*enfold.css"
+  EOH
+end
+
 directory '/srv/www/wordpress/current/wp-content/cache' do
   owner 'www-data'
   group 'www-data'
@@ -122,12 +136,12 @@ end
   package pkg
 end
 
-template '/etc/sudoers' do
-  source 'sudoers.erb'
-  owner 'root'
-  group 'root'
-  mode '0440'
-end
+# template '/etc/sudoers' do
+  # source 'sudoers.erb'
+  # owner 'root'
+  # group 'root'
+  # mode '0440'
+# end
 
 service "apache2" do
   action :restart

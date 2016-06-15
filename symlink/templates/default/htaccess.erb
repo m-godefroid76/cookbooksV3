@@ -4,6 +4,7 @@ RewriteBase /
 RewriteRule ^index\.php$ - [L]
 
 RewriteCond %{HTTP_HOST} ^(.*)<%= node['DOMAIN_NAME'] %>$ [NC]
+RewriteCond %{REQUEST_URI}  /uploads/
 RewriteRule ^(.+\.(png|gif|jpe?g))$ http://<%= node['CDN_CNAME'] %>/$1 [L,R=301]
 
 

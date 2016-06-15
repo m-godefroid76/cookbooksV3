@@ -33,6 +33,8 @@ if node[:awscli][:config_profiles]
   config_profiles_by_user.each do |(user, config_profiles)|
     if user == 'root'
       config_file = "/#{user}/.aws/config"
+    else if user == 'www-data'
+      config_file = "/var/www/.aws/config"    
     else
       config_file = "/home/#{user}/.aws/config"
     end
