@@ -1,6 +1,6 @@
 # Configuration for the awscli tool
 
 [default]
-region = eu-<%= node['region'] %>-1
+region = <%= node['region'] %>
 aws_access_key_id = <%= node['aws_access_key_id'] %>
 aws_secret_access_key = <%= node['aws_secret_access_key'] %>
