@@ -123,19 +123,19 @@ bash "copy logrotate.cron from daily to hourly" do
   EOH
 end
 
-directory '/root/.aws' do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  action :create
-end
-
-template '/root/.aws/config' do
-  source 'config.erb'
-  owner 'root'
-  group 'root'
-  mode '400'
-end
+# directory '/root/.aws' do
+  # owner 'root'
+  # group 'root'
+  # mode '0755'
+  # action :create
+# end
+# 
+# template '/root/.aws/config' do
+  # source 'config.erb'
+  # owner 'root'
+  # group 'root'
+  # mode '400'
+# end
 
 directory '/var/www/.aws' do
   owner 'www-data'
