@@ -1,6 +1,6 @@
 # Configuration for the awscli tool
 
 [default]
-region = <%= node['region'] %>
-aws_access_key_id = <%= node['aws_access_key_id'] %>
-aws_secret_access_key = <%= node['aws_secret_access_key'] %>
+region = <%= node['awscli']['config_profiles']['default']['region'] %>
+aws_access_key_id = <%= node['awscli']['config_profiles']['default']['aws_access_key_id'] %>
+aws_secret_access_key = <%= node['awscli']['config_profiles']['default']['aws_secret_access_key'] %>
