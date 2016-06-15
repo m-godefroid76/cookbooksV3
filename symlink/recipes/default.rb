@@ -161,12 +161,12 @@ bash "download enfold.css from s3" do
   EOH
 end
 
-directory "/srv/www/wordpress/current/wp-content/uploads/" do
-  owner 'www-data'
-  group 'www-data'
-  mode '0755'
-  recursive true
-end
+# directory "/srv/www/wordpress/current/wp-content/uploads/" do
+  # owner 'www-data'
+  # group 'www-data'
+  # mode '0755'
+  # recursive true
+# end
 
 directory '/srv/www/wordpress/current/wp-content/cache' do
   owner 'www-data'
@@ -178,6 +178,12 @@ end
 node[:deploy].each do |application, deploy|
   cache_config = "#{deploy[:deploy_to]}/current/wp-content/w3tc-config"
   execute "chmod -R 777 #{cache_config}" do
+  end
+end
+
+node[:deploy].each do |application, deploy|
+  uploads_folder = "#{deploy[:deploy_to]}/current/wp-content/uploads"
+  execute "chown -R www-data:www-data #{uploads_folder}" do
   end
 end
 
