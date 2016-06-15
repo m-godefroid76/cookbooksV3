@@ -78,6 +78,10 @@ template '/scripts/backup-db.sh' do
   mode '1777'
 end
 
+execute 'chmod script backup' do
+  command 'sudo chmod +x /scripts/backup-db.sh'
+end
+
 directory '/srv/www/wordpress/current/wp-content/w3tc-config' do
   owner 'www-data'
   group 'www-data'
