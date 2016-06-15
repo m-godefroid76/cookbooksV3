@@ -64,6 +64,13 @@ template '/srv/www/wordpress/current/health-check.php' do
   mode '0644'
 end
 
+directory '/scripts' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 template '/scripts/backup-db.sh' do
   source 'backup-db.sh.erb'
   owner 'root'
@@ -122,13 +129,6 @@ end
 directory '/srv/www/wordpress/current/wp-content/cache' do
   owner 'www-data'
   group 'www-data'
-  mode '0755'
-  action :create
-end
-
-directory '/scripts' do
-  owner 'root'
-  group 'root'
   mode '0755'
   action :create
 end
