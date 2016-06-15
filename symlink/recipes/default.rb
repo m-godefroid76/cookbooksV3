@@ -171,7 +171,7 @@ end
 directory '/srv/www/wordpress/current/wp-content/cache' do
   owner 'www-data'
   group 'www-data'
-  mode '0755'
+  mode '0777'
   action :create
 end
 
