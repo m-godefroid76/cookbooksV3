@@ -105,6 +105,13 @@ directory '/srv/www/wordpress/current/wp-content/uploads/cron_reviews' do
   action :create
 end
 
+directory '/srv/www/wordpress/current/wp-content/uploads/cron_reviews/cron_update_reviews' do
+  owner 'www-data'
+  group 'www-data'
+  mode '0755'
+  action :create
+end
+
 template '/srv/www/wordpress/current/wp-content/w3tc-config/master.php' do
   source 'master.php.erb'
   owner 'www-data'
