@@ -119,12 +119,40 @@ bash "copy logrotate.cron from daily to hourly" do
   EOH
 end
 
-# bash "download enfold.css from s3" do
-  # user 'root'
-  # code <<-EOH 
-  # aws s3 cp s3:\/\/dev2-webfactory\/wp-content\/uploads\/ . --recursive  --exclude "*"  --include "*enfold.css"
-  # EOH
-# end
+directory '/root/.aws' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+template '/root/.aws/config' do
+  source 'config.erb'
+  owner 'root'
+  group 'root'
+  mode '400'
+end
+
+directory '/var/www/.aws' do
+  owner 'www-data'
+  group 'www-data'
+  mode '0755'
+  action :create
+end
+
+template '/var/www/.aws/config' do
+  source 'config.erb'
+  owner 'www-data'
+  group 'www-data'
+  mode '400'
+end
+
+bash "download enfold.css from s3" do
+  user 'root'
+  code <<-EOH 
+  aws s3 cp s3:\/\/dev2-webfactory\/wp-content\/uploads\/ . --recursive  --exclude "*"  --include "*enfold.css"
+  EOH
+end
 
 directory '/srv/www/wordpress/current/wp-content/cache' do
   owner 'www-data'
