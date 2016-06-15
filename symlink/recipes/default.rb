@@ -75,7 +75,7 @@ template '/scripts/backup-db.sh' do
   source 'backup-db.sh.erb'
   owner 'root'
   group 'root'
-  mode '1777'
+  mode '0777'
 end
 
 bash "chmod x script backup" do
