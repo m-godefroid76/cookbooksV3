@@ -78,8 +78,11 @@ template '/scripts/backup-db.sh' do
   mode '1777'
 end
 
-execute 'chmod script backup' do
-  command 'sudo chmod +x /scripts/backup-db.sh'
+bash "chmod x script backup" do
+  user 'root'
+  code <<-EOH 
+  chmod +x /scripts/backup-db.sh
+  EOH
 end
 
 directory '/srv/www/wordpress/current/wp-content/w3tc-config' do
@@ -155,6 +158,13 @@ bash "download enfold.css from s3" do
   user 'root'
   code <<-EOH 
   aws s3 cp s3://dev2-webfactory/wp-content/uploads/ /srv/www/wordpress/current/wp-content/uploads/ --recursive  --exclude "*"  --include "*enfold.css"
+  EOH
+end
+
+bash "chown www-data uploads" do
+  user 'root'
+  code <<-EOH 
+  chown -R www-data:www-data /srv/www/wordpress/current/wp-content/uploads/
   EOH
 end
 
