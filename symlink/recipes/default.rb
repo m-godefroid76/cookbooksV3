@@ -126,6 +126,13 @@ directory '/srv/www/wordpress/current/wp-content/cache' do
   action :create
 end
 
+directory '/scripts' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 node[:deploy].each do |application, deploy|
   cache_config = "#{deploy[:deploy_to]}/current/wp-content/w3tc-config"
   execute "chmod -R 777 #{cache_config}" do
