@@ -161,11 +161,11 @@ bash "download enfold.css from s3" do
   EOH
 end
 
-bash "chown www-data uploads" do
-  user 'root'
-  code <<-EOH 
-  chown -R www-data:www-data /srv/www/wordpress/current/wp-content/uploads/
-  EOH
+directory "/srv/www/wordpress/current/wp-content/uploads/" do
+  owner 'www-data'
+  group 'www-data'
+  mode '0755'
+  recursive true
 end
 
 directory '/srv/www/wordpress/current/wp-content/cache' do
