@@ -189,6 +189,13 @@ directory '/srv/www/wordpress/current/wp-content/cache' do
   action :create
 end
 
+directory '/srv/www/wordpress/current/wp-content/cache/cron_reviews' do
+  owner 'www-data'
+  group 'www-data'
+  mode '0777'
+  action :create
+end
+
 node[:deploy].each do |application, deploy|
   cache_config = "#{deploy[:deploy_to]}/current/wp-content/w3tc-config"
   execute "chmod -R 777 #{cache_config}" do
