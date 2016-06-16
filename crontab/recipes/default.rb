@@ -7,6 +7,7 @@ end
 cron "logrotate" do
     action :create
     minute "0"
+    hour '2'
     command '/usr/sbin/logrotate /etc/logrotate.conf > /var/log/cron.log 1>&1'
 end
 
